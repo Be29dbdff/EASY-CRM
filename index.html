@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Comparateur de Mutuelles Régionales</title>
+    <style>
+      :root {
+        --color-primary: #1c3f8f;
+        --color-secondary: #11a7a3;
+        --color-accent: #f1b94d;
+        --color-background: #f7f9fc;
+        --color-surface: #ffffff;
+        --color-text: #1f2a44;
+        --color-muted: #5a6785;
+        --shadow-elevated: 0 15px 35px rgba(16, 36, 94, 0.12);
+        --shadow-soft: 0 10px 25px rgba(16, 36, 94, 0.08);
+        font-size: 16px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Roboto", "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--color-text);
+        background: var(--color-background);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      header,
+      main,
+      footer {
+        width: 100%;
+      }
+
+      .container {
+        width: min(1120px, 92vw);
+        margin: 0 auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: rgba(247, 249, 252, 0.92);
+        backdrop-filter: saturate(180%) blur(20px);
+        box-shadow: 0 1px 0 rgba(17, 49, 96, 0.08);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 0;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 700;
+        color: var(--color-primary);
+        letter-spacing: 0.03em;
+      }
+
+      .brand svg {
+        width: 36px;
+        height: 36px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        font-weight: 500;
+        color: var(--color-muted);
+      }
+
+      .cta-button,
+      .ghost-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.9rem 1.6rem;
+        border-radius: 999px;
+        font-weight: 600;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        cursor: pointer;
+      }
+
+      .cta-button {
+        background: linear-gradient(135deg, var(--color-primary), #102c65);
+        color: white;
+        box-shadow: var(--shadow-soft);
+      }
+
+      .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-elevated);
+      }
+
+      .ghost-button {
+        border: 1px solid rgba(17, 49, 96, 0.18);
+        color: var(--color-primary);
+        background: transparent;
+      }
+
+      .ghost-button:hover {
+        background: rgba(28, 63, 143, 0.08);
+      }
+
+      .hero {
+        padding: 7rem 0 5rem;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: center;
+        gap: 3rem;
+      }
+
+      .hero h1 {
+        font-family: "Montserrat", "Lato", "Segoe UI", sans-serif;
+        font-size: clamp(2.4rem, 4vw, 3.6rem);
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        color: var(--color-primary);
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--color-muted);
+        margin-bottom: 2rem;
+      }
+
+      .hero-illustration {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        background: linear-gradient(145deg, rgba(28, 63, 143, 0.12), rgba(17, 167, 163, 0.12));
+        border-radius: 32px;
+        overflow: hidden;
+        box-shadow: var(--shadow-elevated);
+      }
+
+      .hero-card {
+        position: absolute;
+        background: var(--color-surface);
+        border-radius: 24px;
+        padding: 1.5rem;
+        box-shadow: var(--shadow-soft);
+      }
+
+      .hero-card:nth-child(1) {
+        top: 12%;
+        left: 8%;
+        width: 55%;
+      }
+
+      .hero-card:nth-child(2) {
+        bottom: 14%;
+        right: 10%;
+        width: 48%;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(17, 167, 163, 0.12);
+        color: var(--color-secondary);
+        padding: 0.55rem 1.1rem;
+        border-radius: 999px;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+      }
+
+      .steps {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin: 5rem 0;
+      }
+
+      .step-card {
+        background: var(--color-surface);
+        padding: 2.25rem 1.8rem;
+        border-radius: 24px;
+        box-shadow: var(--shadow-soft);
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        border: 1px solid rgba(28, 63, 143, 0.06);
+      }
+
+      .step-number {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        background: rgba(28, 63, 143, 0.12);
+        color: var(--color-primary);
+        font-size: 1.1rem;
+      }
+
+      .step-card h3 {
+        font-size: 1.25rem;
+        margin: 0;
+        color: var(--color-text);
+        font-family: "Montserrat", "Lato", "Segoe UI", sans-serif;
+      }
+
+      .step-card p {
+        margin: 0;
+        color: var(--color-muted);
+        line-height: 1.6;
+      }
+
+      .comparison {
+        margin-bottom: 5rem;
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .section-header h2 {
+        font-size: clamp(1.8rem, 3vw, 2.4rem);
+        margin: 0;
+        font-family: "Montserrat", "Lato", "Segoe UI", sans-serif;
+        color: var(--color-primary);
+      }
+
+      .filters {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .filter-button {
+        padding: 0.65rem 1.2rem;
+        border-radius: 999px;
+        border: 1px solid rgba(28, 63, 143, 0.14);
+        background: rgba(255, 255, 255, 0.9);
+        font-weight: 600;
+        color: var(--color-muted);
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+      }
+
+      .filter-button.active,
+      .filter-button:hover {
+        background: rgba(28, 63, 143, 0.1);
+        color: var(--color-primary);
+        transform: translateY(-2px);
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: var(--shadow-elevated);
+        background: var(--color-surface);
+      }
+
+      .comparison-table thead {
+        background: linear-gradient(135deg, rgba(28, 63, 143, 0.95), rgba(17, 167, 163, 0.95));
+        color: white;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        padding: 1.4rem 1.2rem;
+        text-align: left;
+      }
+
+      .comparison-table tbody tr:nth-child(odd) {
+        background: rgba(28, 63, 143, 0.03);
+      }
+
+      .comparison-table tbody tr:hover {
+        background: rgba(28, 63, 143, 0.08);
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.4rem 0.8rem;
+        border-radius: 999px;
+        background: rgba(241, 185, 77, 0.16);
+        color: #a46a03;
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+
+      .testimonials {
+        margin-bottom: 5rem;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 2rem;
+      }
+
+      .testimonial-card {
+        background: var(--color-surface);
+        padding: 2.1rem;
+        border-radius: 24px;
+        box-shadow: var(--shadow-soft);
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        border: 1px solid rgba(28, 63, 143, 0.06);
+      }
+
+      .testimonial-card strong {
+        color: var(--color-primary);
+      }
+
+      .footer-cta {
+        background: linear-gradient(135deg, rgba(28, 63, 143, 0.95), rgba(17, 167, 163, 0.95));
+        color: white;
+        border-radius: 32px;
+        padding: clamp(2.5rem, 6vw, 4rem);
+        box-shadow: var(--shadow-elevated);
+        margin-bottom: 4rem;
+        text-align: center;
+      }
+
+      .footer-cta h2 {
+        font-size: clamp(2rem, 3.5vw, 2.6rem);
+        margin-bottom: 1rem;
+        font-family: "Montserrat", "Lato", "Segoe UI", sans-serif;
+      }
+
+      footer {
+        background: #0f1f45;
+        color: rgba(255, 255, 255, 0.8);
+        padding: 2rem 0;
+      }
+
+      footer .container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      footer a {
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      @media (max-width: 960px) {
+        .hero {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+
+        .hero .actions {
+          justify-content: center;
+        }
+
+        .hero-illustration {
+          margin: 0 auto;
+          max-width: 520px;
+        }
+
+        .steps,
+        .testimonials {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 720px) {
+        .nav {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .nav-links {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .steps,
+        .testimonials {
+          grid-template-columns: 1fr;
+        }
+
+        .section-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .filters {
+          width: 100%;
+        }
+
+        .filters .filter-button {
+          flex: 1 1 calc(50% - 0.75rem);
+          text-align: center;
+        }
+
+        .comparison-table {
+          display: block;
+          overflow-x: auto;
+          border-radius: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <a class="brand" href="#">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="6" y="12" width="52" height="40" rx="12" fill="url(#grad)" />
+            <path d="M18 32c4.2-5.4 11.8-5.4 16 0" stroke="white" stroke-width="3" stroke-linecap="round" />
+            <path d="M32 32c4.2-5.4 11.8-5.4 16 0" stroke="white" stroke-width="3" stroke-linecap="round" />
+            <defs>
+              <linearGradient id="grad" x1="6" y1="12" x2="58" y2="52" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#1C3F8F" />
+                <stop offset="1" stop-color="#11A7A3" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <span>EASY Mutuelles</span>
+        </a>
+        <nav class="nav-links">
+          <a href="#fonctionnement">Fonctionnement</a>
+          <a href="#comparateur">Comparateur</a>
+          <a href="#avis">Avis clients</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero container">
+        <div class="hero-content">
+          <div class="badge">Nouvelle version 2024 • 100% régionale</div>
+          <h1>Comparez les mutuelles de votre région en moins de 2 minutes</h1>
+          <p>
+            Renseignez votre profil, découvrez les meilleures garanties locales et
+            choisissez la mutuelle qui correspond parfaitement à vos besoins santé,
+            votre budget et votre style de vie.
+          </p>
+          <div class="actions" style="display: flex; gap: 1rem; flex-wrap: wrap">
+            <a class="cta-button" href="#comparateur">Lancer la simulation</a>
+            <a class="ghost-button" href="#contact">Demander à être rappelé</a>
+          </div>
+        </div>
+        <div class="hero-illustration" aria-hidden="true">
+          <div class="hero-card">
+            <h3 style="margin: 0; font-size: 1.05rem; color: var(--color-text)">
+              Profil famille - PACA
+            </h3>
+            <p style="margin: 0.75rem 0 0; color: var(--color-muted); font-size: 0.95rem">
+              Couverture hospitalisation 220% BRSS<br />
+              Optique + dentaire renforcés
+            </p>
+            <p style="margin: 1rem 0 0; font-weight: 700; color: var(--color-primary)">
+              38,50 € / mois
+            </p>
+          </div>
+          <div class="hero-card">
+            <p style="margin: 0; font-size: 0.95rem; color: var(--color-muted)">
+              "Un comparateur clair, rapide et des conseillers disponibles.
+              J'ai économisé 240 € par an !"
+            </p>
+            <p style="margin: 1rem 0 0; font-weight: 600; color: var(--color-primary)">
+              — Marie, Aix-en-Provence
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="fonctionnement" class="container" aria-labelledby="fonctionnement-title">
+        <div class="section-header">
+          <h2 id="fonctionnement-title">Comment fonctionne EASY Mutuelles&nbsp;?</h2>
+          <p style="margin: 0; color: var(--color-muted); max-width: 460px">
+            Un parcours simplifié en trois étapes pour identifier la mutuelle la
+            plus pertinente selon votre profil, votre budget et vos priorités santé.
+          </p>
+        </div>
+        <div class="steps">
+          <article class="step-card">
+            <div class="step-number">1</div>
+            <h3>Complétez votre profil</h3>
+            <p>
+              Indiquez votre âge, votre situation familiale et vos besoins
+              spécifiques (hospitalisation, optique, dentaire, prévention).
+            </p>
+          </article>
+          <article class="step-card">
+            <div class="step-number">2</div>
+            <h3>Comparez les offres locales</h3>
+            <p>
+              Accédez à un tableau clair avec logos, garanties clés, niveau de
+              remboursement et tarifs mensuels/annuels.
+            </p>
+          </article>
+          <article class="step-card">
+            <div class="step-number">3</div>
+            <h3>Souscrivez ou demandez conseil</h3>
+            <p>
+              Téléchargez un devis PDF personnalisé ou planifiez un appel avec un
+              conseiller spécialisé dans votre région.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="comparateur" class="container comparison" aria-labelledby="comparateur-title">
+        <div class="section-header">
+          <h2 id="comparateur-title">Découvrez les meilleures mutuelles de votre région</h2>
+          <div class="filters">
+            <button class="filter-button active" type="button">Prix le plus bas</button>
+            <button class="filter-button" type="button">Hospitalisation renforcée</button>
+            <button class="filter-button" type="button">Optique &amp; dentaire</button>
+            <button class="filter-button" type="button">Indépendants</button>
+          </div>
+        </div>
+        <div style="overflow-x: auto">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Mutuelle</th>
+                <th>Garanties clés</th>
+                <th>Niveau de remboursement</th>
+                <th>Prix / mois</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Azur Santé Provence</strong><br />
+                  <span style="color: var(--color-muted); font-size: 0.9rem">Formule Sérénité</span>
+                </td>
+                <td>
+                  Hospitalisation 200% BRSS<br />
+                  Optique : 250 € / an<br />
+                  Dentaire : 350 € / an
+                </td>
+                <td>
+                  <div class="tag">Meilleur rapport qualité/prix</div>
+                  90% soins courants
+                </td>
+                <td style="font-weight: 700; color: var(--color-primary)">32,90 €</td>
+                <td>
+                  <a class="cta-button" style="padding: 0.6rem 1.4rem" href="#contact">Demander un devis</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Méditerranée Protect</strong><br />
+                  <span style="color: var(--color-muted); font-size: 0.9rem">Formule Confort</span>
+                </td>
+                <td>
+                  Hospitalisation 250% BRSS<br />
+                  Téléconsultation incluse<br />
+                  Prévention &amp; bien-être
+                </td>
+                <td>100% soins courants</td>
+                <td style="font-weight: 700; color: var(--color-primary)">38,50 €</td>
+                <td>
+                  <a class="ghost-button" style="padding: 0.6rem 1.4rem" href="#contact">Être rappelé</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Riviera Mutuelle</strong><br />
+                  <span style="color: var(--color-muted); font-size: 0.9rem">Formule Vision+</span>
+                </td>
+                <td>
+                  Hospitalisation 180% BRSS<br />
+                  Optique : 320 € / an<br />
+                  Dentaire : 420 € / an
+                </td>
+                <td>85% soins courants</td>
+                <td style="font-weight: 700; color: var(--color-primary)">29,90 €</td>
+                <td>
+                  <a class="ghost-button" style="padding: 0.6rem 1.4rem" href="#contact">Voir le détail</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="avis" class="container" aria-labelledby="avis-title">
+        <div class="section-header">
+          <h2 id="avis-title">Ce que disent nos utilisateurs</h2>
+        </div>
+        <div class="testimonials">
+          <article class="testimonial-card">
+            <p>
+              "Interface très claire et résultats instantanés. J'ai pu comparer 6 mutuelles
+              locales et souscrire en ligne sans stress."
+            </p>
+            <strong>Thomas, Nice</strong>
+          </article>
+          <article class="testimonial-card">
+            <p>
+              "Le filtre 'Seniors' m'a permis d'identifier une formule avec téléassistance
+              incluse. Support téléphonique impeccable."
+            </p>
+            <strong>Jeanne, Marseille</strong>
+          </article>
+          <article class="testimonial-card">
+            <p>
+              "J'ai reçu mon devis personnalisé en PDF et un conseiller m'a rappelé dans la
+              journée. Service rapide et humain."
+            </p>
+            <strong>Lucie, Toulon</strong>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" class="container" aria-labelledby="contact-title">
+        <div class="footer-cta">
+          <h2 id="contact-title">Besoin d'un accompagnement personnalisé&nbsp;?</h2>
+          <p style="margin-bottom: 2rem; font-size: 1.05rem">
+            Laissez-nous vos coordonnées pour être rappelé par un conseiller ou
+            recevoir un devis détaillé par email.
+          </p>
+          <form style="display: grid; gap: 1rem; max-width: 540px; margin: 0 auto">
+            <div style="display: grid; gap: 0.4rem; text-align: left">
+              <label for="contact-name" style="font-weight: 600">Nom complet</label>
+              <input
+                id="contact-name"
+                type="text"
+                name="name"
+                placeholder="Votre nom"
+                required
+                style="padding: 0.85rem 1rem; border-radius: 12px; border: none; font-size: 1rem"
+              />
+            </div>
+            <div style="display: grid; gap: 0.4rem; text-align: left">
+              <label for="contact-email" style="font-weight: 600">Email</label>
+              <input
+                id="contact-email"
+                type="email"
+                name="email"
+                placeholder="vous@example.com"
+                required
+                style="padding: 0.85rem 1rem; border-radius: 12px; border: none; font-size: 1rem"
+              />
+            </div>
+            <div style="display: grid; gap: 0.4rem; text-align: left">
+              <label for="contact-phone" style="font-weight: 600">Téléphone</label>
+              <input
+                id="contact-phone"
+                type="tel"
+                name="phone"
+                placeholder="06 12 34 56 78"
+                style="padding: 0.85rem 1rem; border-radius: 12px; border: none; font-size: 1rem"
+              />
+            </div>
+            <button class="cta-button" type="submit" style="border: none">Être rappelé</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <small>© 2024 EASY Mutuelles – Comparateur régional de mutuelles santé.</small>
+        <small>
+          <a href="#">Mentions légales</a> · <a href="#">Politique de confidentialité</a> ·
+          <a href="#">Gestion des cookies</a>
+        </small>
+      </div>
+    </footer>
+  </body>
+</html>
