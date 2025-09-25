@@ -2,11 +2,12 @@
 
 Base pour CRM cabinet d’assurance.
 
-## Démarrage rapide
+## Livrables regroupés
 
-Ouvrez `index.html` dans votre navigateur pour découvrir la page d’accueil du comparateur Easy Insure.
+L’ensemble des éléments (site vitrine, identité Easy Insure et documentation projet) est désormais regroupé dans le dossier `livrables/`.
 
-## Identité de marque
+- `livrables/site/index.html` : page d’accueil du comparateur Easy Insure.
+- `livrables/site/assets/` : ressources graphiques (logo, visuels).
+- `livrables/docs/cahier_des_charges.md` : cahier des charges complet et direction artistique.
 
-- Logo Easy Insure disponible dans `assets/easy-insure-logo.svg` et intégré dans la navigation.
-- Palette et UI adaptées à l’univers bleu/vert du logo, avec focus sur l’UX (parcours guidé, filtres intelligents, CTA différenciés).
+Ouvrez `livrables/site/index.html` dans votre navigateur pour découvrir la page d’accueil.
