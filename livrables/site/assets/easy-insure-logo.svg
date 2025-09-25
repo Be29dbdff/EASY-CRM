@@ -1,0 +1,31 @@
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="32" y1="32" x2="288" y2="288" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0F5B8C" />
+      <stop offset="0.55" stop-color="#0B7FAB" />
+      <stop offset="1" stop-color="#19C7C2" />
+    </linearGradient>
+    <linearGradient id="leafGradient" x1="104" y1="64" x2="240" y2="256" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E8FFFF" />
+      <stop offset="1" stop-color="#B9F5F8" />
+    </linearGradient>
+    <linearGradient id="leafSecondary" x1="80" y1="160" x2="184" y2="288" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F2FBFF" />
+      <stop offset="1" stop-color="#CAF4F9" />
+    </linearGradient>
+  </defs>
+  <rect x="32" y="32" width="256" height="256" rx="64" fill="url(#bgGradient)" />
+  <path
+    d="M160 80c-30.4 36.8-50.4 72.53-50.4 104 0 41.24 32.45 74.8 72.4 74.8 44.55 0 80.8-35.64 80.8-79.6 0-22.35-10.53-44.67-30.8-66.4-14.53-15.2-32.93-26.93-51.2-32.8-11.47-3.67-22-4.67-20.8 0z"
+    fill="url(#leafGradient)"
+  />
+  <path
+    d="M144 120c-48.27 15.07-80 46.8-80 89.6 0 37.07 28.53 64 62.4 64 39.47 0 63.47-26 70.4-63.2 4.93-26.4-7.07-55.6-27.2-74.4-10.13-9.47-19.2-14.53-25.6-16z"
+    fill="url(#leafSecondary)"
+  />
+  <path
+    d="M173.6 172.8c14.93 15.07 26.13 41.33 9.47 65.07-12.8 18.4-36.8 24.4-54.4 14.53 18.93-6.67 28-22.93 26.93-42.67-0.27-5.6-3.87-12.8-10.4-21.6 14.93-6.93 23.47-8.93 28.4-15.33z"
+    fill="#77E2E0"
+    opacity="0.6"
+  />
+</svg>
